@@ -1,24 +1,19 @@
 # -*- coding: utf-8 -*-
 """
-Created on Sun Jun  7 12:48:34 2020
+Created on Mon Jun  8 13:13:26 2020
 
-@author: Robert Schuldt
-
-Explore the data on Street RX
+@author: 3043340
 """
-# Using street RX illicit drug data to look at information on 
-# drug use during the months of may and april during the pandemic
 
 import pandas as pd
 
+#Import the data set 
 
+file_s= 'C:\\Users\\3043340\\Desktop\\StreetRX Program\\streetrx.csv'
 
-street_file = "C:\\Users\\robsc\\Desktop\\Street Rx\\streetrx.csv"
-#Grab my data st
-df = pd.read_csv( filepath_or_buffer =  street_file )
+df = pd.read_csv(file_s)
 
-#My names are quite messy and I just want to get state names out from the local
-
+#Want to upcase my names of var values
 def upcase(var1):
     df[var1] = df[var1].str.upper()
     return
@@ -26,6 +21,8 @@ def upcase(var1):
 upcase('place_name')
 upcase('product_name')
 
+
+#Create a list of states for me to use
 states = [
         'Alaska',
         'Alabama',
@@ -81,22 +78,32 @@ states = [
         'Wyoming'
 ]
 
-#    #I need to define a function where I check to see if a value in the place name matches the state
-#    name in a list that I have created. I can go through each place and see if it matches a state name
-#    from my list of state names. This would involve the IN operator and I need to define a function that compares
-#    each line of my dataframe place name with the list of state names
-
-states = [state.upper() for state in states]
+states = [state.upper() for state in states] 
 
 
-locales = df['place_name']
+#Identify the states in each of the rows and the corresponding quote ID
+#Then I can concat the two lists to get the matching quote id to state
 
-df2 = []
+df_state = []
+df_quote = []
+for _, _, _, place_name, _, _, _, quote_id in df.values: 
+    for state in states: 
+        if state in place_name:
+              df_state.append(state)
+              df_quote.append(quote_id)
+              break
 
-for local in locales:
-    for state in states:
-        if state in local:
-            df2.append(state)
-            break
-            
+#Now turn my list into dataframes that I can add to my original Df
+              
+from pandas import DataFrame
+df_state= DataFrame(df_state, columns = ['State'])
+df_quote = DataFrame(df_quote, columns = ['quote_id'])
 
+state_id = pd.concat([df_state, df_quote], sort = False, axis = 1)
+
+        
+               
+          
+           
+        
+        
