@@ -9,7 +9,7 @@ import pandas as pd
 
 #Import the data set 
 
-file_s= 'C:\\Users\\3043340\\Desktop\\StreetRX Program\\streetrx.csv'
+file_s= '..\\streetrx.csv'
 
 df = pd.read_csv(file_s)
 
