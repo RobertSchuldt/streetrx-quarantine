@@ -9,7 +9,7 @@ import pandas as pd
 
 #Import the data set 
 
-file_s= '..\\streetrx.csv'
+file_s= 'C:\\Users\\3043340\\Desktop\\StreetRX Program\\streetrx.csv'
 
 df = pd.read_csv(file_s)
 
@@ -101,7 +101,22 @@ df_quote = DataFrame(df_quote, columns = ['quote_id'])
 
 state_id = pd.concat([df_state, df_quote], sort = False, axis = 1)
 
-        
+#create my merged data set with state names
+
+streetrx_clean = df.merge(state_id, left_on = 'quote_id', right_on = 'quote_id')
+
+
+
+
+
+
+
+
+
+
+
+#Now write to CSV for use in Tableau
+streetrx_clean.to_csv('C:\\Users\\3043340\\Desktop\\StreetRX Program\\clean_streetrx.csv', header= True)
                
           
            
